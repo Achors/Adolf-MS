@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="create-task.css" type="text/css">
+    <!-- <script src="Login.js" defer type="module"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js" defer type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js" defer type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js" defer type="module"></script>
+    <title>Task Management</title>
+</head>
+<body>
+    <div id="tsk" class="task">
+        <form id="task" onsubmit="storeTask(event)">
+            <label>Task</label>
+            <input id="tasks" type="text" placeholder="Enter task"></input>
+            <label>Description</label>
+            <input id="tsk-des" type="text" placeholder="Description"></input>
+            <input id="dates" type="number" placeholder="Completion date"></input>
+            <button id="task-btn" name="Create Task">+ADD TASK</button>
+        </form>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+        const firebaseConfig = {
+  apiKey: "AIzaSyD3SDlFfiMZHpIKsT9Wdr6z94G04Pa_PD4",
+  authDomain: "nyerere-ms.firebaseapp.com",
+  databaseURL: "https://nyerere-ms-default-rtdb.firebaseio.com",
+  projectId: "nyerere-ms",
+  storageBucket: "nyerere-ms.appspot.com",
+  messagingSenderId: "552953650378",
+  appId: "1:552953650378:web:09b2ef19a6103608df2833",
+  measurementId: "G-WQ3PQ8NLYE"
+};
+const app = initializeApp(firebaseConfig);
+
+import { getDatabase,
+    ref, 
+    set, 
+    child, 
+    remove, 
+    update, 
+} from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+
+
+
+const database = getDatabase();
+
+        const taskInput = document.getElementById("tasks");
+        const descriptionInput = document.getElementById("tsk-des");
+        const dateInput = document.getElementById("dates");
+        const taskButton = document.getElementById("task-btn");
+    
+function InsertData() {
+    set(ref(database, "Name" + task), {
+        task: taskInput.value,
+        desc: descriptionInput.value,
+        date: dateInput.value
+    })
+    .then(()=>{
+        window.alert("Success!, Data stored");
+        window.location = "./task-list.html";
+    })
+    .catch((error) => {
+        alert("Error occured. Try again"+error);
+        
+});
+};
+taskButton.addEventListener("click", InsertData);
+    </script>
+    
+</body>
+</html>
